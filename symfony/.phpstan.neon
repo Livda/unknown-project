@@ -1,0 +1,7 @@
+parameters:
+    excludes_analyse:
+        - %rootDir%/../../../src/Migrations
+    level: 7
+    inferPrivatePropertyTypeFromConstructor: true
+    paths:
+        - src

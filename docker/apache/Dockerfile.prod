@@ -1,0 +1,19 @@
+FROM symfony:base
+ENV APP_ENV prod
+
+COPY docker/apache/config/prod/symfony.conf /etc/apache2/conf.d/symfony.conf
+COPY symfony /var/www/symfony
+WORKDIR /var/www/symfony
+RUN echo "<?php return array ('APP_ENV' => 'prod');" > .env.local.php
+
+RUN composer install --no-dev --optimize-autoloader --classmap-authoritative --no-suggest --ansi --no-interaction
+
+RUN apk add --update --no-cache yarn
+RUN yarn --check-files --non-interactive && yarn build --optimize-minimize
+RUN apk del yarn
+
+RUN rm -rf /var/cache/apk/* /tmp/* \
+    assets/ node_modules/  \
+    yarn.lock package.json
+
+RUN chown -R apache:apache /var/www/symfony

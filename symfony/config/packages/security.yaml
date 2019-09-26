@@ -1,0 +1,59 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: auto
+        App\Entity\Admin:
+            algorithm: auto
+
+    providers:
+        admin_provider:
+            entity:
+                class: App\Entity\Admin
+                property: username
+        user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        admin:
+            anonymous: true
+            guard:
+                authenticators:
+                    - App\Security\AdminAuthenticator
+            pattern: ^/admin
+            provider: admin_provider
+            logout:
+                path: admin_security_logout
+                target: admin_security_login
+            remember_me:
+                httponly: false
+                lifetime: 604800 # 1 week in seconds
+                samesite: strict
+                secret: '%kernel.secret%'
+                secure: true
+                path: /admin
+        main:
+            anonymous: true
+            guard:
+                authenticators:
+                    - App\Security\UserAuthenticator
+            provider: user_provider
+            logout:
+                path: user_logout
+                target: homepage
+            remember_me:
+                httponly: false
+                lifetime: 604800 # 1 week in seconds
+                name: SHINNYREMEMBERME
+                samesite: strict
+                secret: '%kernel.secret%'
+                secure: true
+                path: /
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/account, roles: ROLE_USER }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }

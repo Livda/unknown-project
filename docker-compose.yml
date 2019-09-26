@@ -1,0 +1,35 @@
+version: '3.6'
+
+services:
+    database:
+        build: './docker/database'
+        environment:
+            MYSQL_ROOT_PASSWORD: 'symfony'
+            MYSQL_DATABASE: 'symfony'
+            MYSQL_USER: 'symfony'
+            MYSQL_PASSWORD: 'symfony'
+        ports:
+            - '3306:3306'
+        volumes:
+            - './database:/var/lib/mysql'
+        user: 'symfony'
+    encore:
+        build: './docker/node'
+        command: ["yarn", "watch"]
+        user: symfony
+        volumes:
+            - './symfony/:/app'
+        working_dir: '/app'
+    web:
+        build:
+            context: './docker/apache'
+            dockerfile: Dockerfile.dev
+        links:
+            - database
+        ports:
+            - '80:80'
+        volumes:
+            - './symfony:/var/www/symfony'
+            - './logs/apache/:/var/log/apache2'
+            - './logs/symfony:/var/www/symfony/var/log'
+        working_dir: '/var/www/symfony'
