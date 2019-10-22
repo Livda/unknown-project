@@ -43,13 +43,16 @@ class User implements UserInterface
     private $active = false;
 
     /**
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $activateToken;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $firstName;
 
     /**
-     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $lastName;
@@ -58,6 +61,16 @@ class User implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $creationDate;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $resetToken;
+
+    public function __construct()
+    {
+        $this->creationDate = new \DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -129,7 +142,7 @@ class User implements UserInterface
      */
     public function eraseCredentials() {}
 
-    public function getActive(): ?bool
+    public function isActive(): bool
     {
         return $this->active;
     }
@@ -137,6 +150,18 @@ class User implements UserInterface
     public function setActive(bool $active): self
     {
         $this->active = $active;
+
+        return $this;
+    }
+
+    public function getActivateToken(): ?string
+    {
+        return $this->activateToken;
+    }
+
+    public function setActivateToken(?string $activateToken): self
+    {
+        $this->activateToken = $activateToken;
 
         return $this;
     }
@@ -173,6 +198,19 @@ class User implements UserInterface
     public function setCreationDate(\DateTimeInterface $creationDate): self
     {
         $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+
+    public function setResetToken(?string $resetToken): self
+    {
+        $this->resetToken = $resetToken;
 
         return $this;
     }

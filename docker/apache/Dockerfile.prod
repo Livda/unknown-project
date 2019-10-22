@@ -1,4 +1,10 @@
-FROM symfony:base
+FROM node:10-alpine as js-builder
+
+COPY symfony /app/
+WORKDIR /app
+RUN yarn --check-files --non-interactive && yarn build --optimize-minimize
+
+FROM so-vue:base
 ENV APP_ENV prod
 
 COPY docker/apache/config/prod/symfony.conf /etc/apache2/conf.d/symfony.conf
@@ -7,10 +13,7 @@ WORKDIR /var/www/symfony
 RUN echo "<?php return array ('APP_ENV' => 'prod');" > .env.local.php
 
 RUN composer install --no-dev --optimize-autoloader --classmap-authoritative --no-suggest --ansi --no-interaction
-
-RUN apk add --update --no-cache yarn
-RUN yarn --check-files --non-interactive && yarn build --optimize-minimize
-RUN apk del yarn
+COPY --from=js-builder /app/public/build /var/www/symfony/public/build
 
 RUN rm -rf /var/cache/apk/* /tmp/* \
     assets/ node_modules/  \

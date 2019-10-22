@@ -1,0 +1,5 @@
+<h1>{{ 'templates.email.activate.h1'|trans }}</h1>
+
+<p>{{ 'templates.email.activate.text'|trans }}</p>
+{%- set link = absolute_url(path('activate', {activateToken: user.activateToken})) -%}
+<a href="{{ link }}" target="_blank">{{ link }}</a>

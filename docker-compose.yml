@@ -20,12 +20,17 @@ services:
         volumes:
             - './symfony/:/app'
         working_dir: '/app'
+    maildev:
+        image: djfarrelly/maildev:1.1.0
+        ports:
+          - 1080:80
     web:
         build:
             context: './docker/apache'
             dockerfile: Dockerfile.dev
         links:
             - database
+            - maildev
         ports:
             - '80:80'
         volumes:

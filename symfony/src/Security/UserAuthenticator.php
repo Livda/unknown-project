@@ -38,7 +38,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
 
     public function supports(Request $request)
     {
-        return 'app_login' === $request->attributes->get('_route')
+        return 'login' === $request->attributes->get('_route')
             && $request->isMethod('POST');
     }
 
@@ -52,7 +52,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
 
         $session = $request->getSession();
         if ($session !== null) {
-            $session->set(Security::LAST_USERNAME, $credentials['username']);
+            $session->set(Security::LAST_USERNAME, $credentials['email']);
         }
 
         return $credentials;
@@ -70,7 +70,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
 
         if ($user === null) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Email could not be found.');
+            throw new CustomUserMessageAuthenticationException('User not found.');
         }
 
         return $user;
@@ -78,7 +78,9 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
 
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        $isActive = $user->isActive();
+        $isPasswordValid = $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
+        return $isPasswordValid && $isActive;
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
@@ -93,6 +95,6 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator
 
     protected function getLoginUrl()
     {
-        return $this->urlGenerator->generate('user_login');
+        return $this->urlGenerator->generate('login');
     }
 }

@@ -4,5 +4,25 @@
             <img src="{{ asset('build/images/icon.svg') }}" width="30" height="30" class="d-inline-block align-top" alt="{{ brand_name }}'s logo">
             {{ brand_name }}
         </a>
+        <div class="d-flex">
+            <div class="dropdown mr-2">
+                <button class="btn dropdown-toggle" type="button" id="headerDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{ asset('build/images/flag-' ~ app.request.locale ~ '.png') }}" alt="language flag" class="flag"/>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="headerDropdown">
+                    {% set route = app.request.attributes.get('_route') %}
+                    {% set parameters = app.request.attributes.get('_route_params') %}
+                    <a class="dropdown-item" href="/en/">English</a>
+                    <a class="dropdown-item" href="/fr/">Français</a>
+                </div>
+            </div>
+            {% if app.user is null %}
+                <a href="{{ path('register') }}" class="btn btn-primary mr-2">{{ 'templates._header.register'|trans }}</a>
+                <a href="{{ path('login') }}" class="btn btn-outline-primary">{{ 'templates._header.login'|trans }}</a>
+            {% else %}
+                <a href="{{ path('account_index') }}" class="btn btn-primary mr-2">{{ 'templates._header.account'|trans }}</a>
+                <a href="{{ path('logout') }}" class="btn btn-outline-danger">{{ 'templates._header.logout'|trans }}</a>
+            {% endif %}
+        </div>
     </nav>
 </header>

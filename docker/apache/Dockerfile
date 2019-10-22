@@ -1,4 +1,4 @@
-FROM alpine:3.10 as base
+FROM alpine:3.10
 
 RUN apk add --upgrade --no-cache \
     apache2 \

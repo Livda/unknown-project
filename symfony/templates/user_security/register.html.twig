@@ -1,17 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}{{ 'templates.user_security.register.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="security-form card">
+        <div class="card-body">
+            <div class="d-flex flex-column text-center">
+                <h1 class="h3 my-2">{{ 'templates.user_security.register.h1'|trans }}</h1>
+                <p class="mb-3 small">{{ 'templates.user_security.register.subtitle'|trans }}</p>
+            </div>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword) }}
-        {{ form_row(registrationForm.firstName) }}
-        {{ form_row(registrationForm.lastName) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword) }}
+                {{ form_row(registrationForm.firstName) }}
+                {{ form_row(registrationForm.lastName) }}
 
-        <button class="btn btn-primary">Register</button>
-    {{ form_end(registrationForm) }}
+                {% do registrationForm.agreeTerms.setRendered %} {# trick to translate the gcu path #}
+                {% dump(registrationForm.agreeTerms) %}
+                <div class="form-group">
+                    {{ form_errors(registrationForm.agreeTerms) }}
+                    <div class="form-check">
+                        <input id="{{ registrationForm.agreeTerms.vars.id }}" class="form-check-input" type="checkbox"
+                               name="{{ registrationForm.agreeTerms.vars.full_name }}"
+                               value="{{ registrationForm.agreeTerms.vars.value }}"
+                               {% if registrationForm.agreeTerms.vars.required %}
+                                   required="required"
+                               {% endif %}
+                        >
+                        <label class="form-check-label required" for="{{ registrationForm.agreeTerms.vars.id }}">
+                            {{ registrationForm.agreeTerms.vars.label|trans({'%term_condition_use%': path('term_condition_use')})|raw }}
+                        </label>
+                    </div>
+                </div>
+
+                <button class="w-100 btn btn-lg btn-primary text-uppercase" type="submit">
+                    {{ 'templates.user_security.register.submit'|trans }}
+                </button>
+            {{ form_end(registrationForm) }}
+
+            <hr class="my-4">
+            <p class="small">
+                {{ 'templates.user_security.register.login.main_text'|trans }}
+                <a href="{{ path('login') }}">{{ 'templates.user_security.register.login.link_text'|trans }}</a>
+            </p>
+        </div>
+    </div>
 {% endblock %}

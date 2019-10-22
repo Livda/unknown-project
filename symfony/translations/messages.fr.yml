@@ -1,0 +1,64 @@
+form:
+    registration:
+        agreeTerms:
+            label: 'En créant un compte, vous acceptez les <a href="%term_condition_use%" target="_blank">Conditions d''utilisation</a>.'
+        email:
+            label: 'Adresse email'
+            placeholder: 'Adresse email'
+        firstName:
+            label: 'Prénom'
+            placeholder: 'Jean'
+        lastName:
+            label: 'Nom'
+            placeholder: 'Dupont'
+        plainPassword:
+            first:
+                label: 'Mot de passe'
+                placeholder: 'mot de passe'
+            second:
+                label: 'Confirmez votre mot de passe'
+                placeholder: 'mot de passe'
+
+service:
+    mail_sender:
+        reset_password:
+            subject: 'Lien pour réinitialiser votre mot de passe'
+
+templates:
+    _header:
+        account: 'Mon compte'
+        register: 'Créer un compte'
+        login: 'Se connecter'
+        logout: 'Deconnexion'
+    account:
+        index:
+            h1: 'Mon compte'
+    email:
+        reset_password:
+            h1: 'Réinitialisation de votre mot de passe'
+            text: 'Veuillez utiliser le lien ci-dessous pour terminer le processus de changement de votre mot de passe.'
+    login:
+        submit: 'Se connecter'
+        email:
+            label: 'Adresse email'
+            placeholder: 'Adresse email'
+        h1: 'Bon retour parmi nous !'
+        password:
+            forgotten: 'Mot de passe oublié ?'
+            label: 'Mot de passe'
+            placeholder: 'mot de passe'
+        register:
+            main_text: 'Vous n''avez pas encore de compte ?'
+            link_text: 'Créer un compte'
+        remember_me:
+            text: 'Se souvenir de moi pendant %remember_me% jours'
+        subtitle: 'Merci de rentrer les informations de votre utilisateur.'
+        title: 'Connexion'
+    register:
+        h1: 'Créer un compte'
+        login:
+            main_text: 'Vous avez déjà un compte ?'
+            link_text: 'Connectez vous !'
+        submit: 'Créer mon compte'
+        subtitle: 'Entrez vous informations personnelles'
+

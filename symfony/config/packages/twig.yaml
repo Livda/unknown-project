@@ -4,4 +4,5 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes: ['bootstrap_4_layout.html.twig']
     globals:
-        brand_name: '%env(BRAND_NAME)%'
+        brand_name: '%brand_name%'
+        remember_me_lifetime: '%remember_me_lifetime%'

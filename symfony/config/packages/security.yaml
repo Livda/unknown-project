@@ -1,15 +1,12 @@
+parameters:
+    remember_me_lifetime: 2592000 # 30 days in seconds
+
 security:
     encoders:
         App\Entity\User:
             algorithm: auto
-        App\Entity\Admin:
-            algorithm: auto
 
     providers:
-        admin_provider:
-            entity:
-                class: App\Entity\Admin
-                property: username
         user_provider:
             entity:
                 class: App\Entity\User
@@ -18,23 +15,6 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        admin:
-            anonymous: true
-            guard:
-                authenticators:
-                    - App\Security\AdminAuthenticator
-            pattern: ^/admin
-            provider: admin_provider
-            logout:
-                path: admin_security_logout
-                target: admin_security_login
-            remember_me:
-                httponly: false
-                lifetime: 604800 # 1 week in seconds
-                samesite: strict
-                secret: '%kernel.secret%'
-                secure: true
-                path: /admin
         main:
             anonymous: true
             guard:
@@ -42,11 +22,11 @@ security:
                     - App\Security\UserAuthenticator
             provider: user_provider
             logout:
-                path: user_logout
+                path: logout
                 target: homepage
             remember_me:
                 httponly: false
-                lifetime: 604800 # 1 week in seconds
+                lifetime: '%remember_me_lifetime%'
                 name: SHINNYREMEMBERME
                 samesite: strict
                 secret: '%kernel.secret%'

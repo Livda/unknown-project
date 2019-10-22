@@ -1,4 +1,4 @@
-FROM symfony:base
+FROM so-vue:base
 
 ARG UID=1000
 ARG GID=1000

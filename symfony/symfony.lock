@@ -120,6 +120,9 @@
             "config/packages/dev/easy_log_handler.yaml"
         ]
     },
+    "egulias/email-validator": {
+        "version": "2.1.11"
+    },
     "friendsofphp/php-cs-fixer": {
         "version": "2.2",
         "recipe": {
@@ -170,6 +173,9 @@
     },
     "nikic/php-parser": {
         "version": "v4.2.1"
+    },
+    "ocramius/package-versions": {
+        "version": "1.5.1"
     },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
@@ -326,6 +332,12 @@
             "src/Kernel.php"
         ]
     },
+    "symfony/http-client": {
+        "version": "v4.3.5"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v1.1.7"
+    },
     "symfony/http-foundation": {
         "version": "v4.2.4"
     },
@@ -337,6 +349,18 @@
     },
     "symfony/intl": {
         "version": "v4.3.4"
+    },
+    "symfony/mailer": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "6e5921f710bec05533f664e0b9a3d838545edd82"
+        },
+        "files": [
+            "config/packages/mailer.yaml"
+        ]
     },
     "symfony/maker-bundle": {
         "version": "1.0",

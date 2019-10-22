@@ -1,0 +1,112 @@
+controller:
+    account:
+        change_password:
+            success: 'Your password is updated'
+    user_security:
+        reset_password_request:
+            email_send: 'An email with a link to reset your password was send to %email%.'
+            user_not_found: 'Not user found with this email address'
+form:
+    email:
+        email:
+            label: 'Email address'
+            placeholder: 'name@address.com'
+    registration:
+        agreeTerms:
+            label: 'By creating an account, you agree the <a href="%term_condition_use%" target="_blank">Terms and Conditions</a>.'
+        email:
+            label: 'Email address'
+            placeholder: 'name@address.com'
+        firstName:
+            label: 'First Name'
+            placeholder: 'John'
+        lastName:
+            label: 'Last name'
+            placeholder: 'Smith'
+        plainPassword:
+            first:
+                label: 'Password'
+                placeholder: 'password'
+            second:
+                label: 'Confirm your password'
+                placeholder: 'password'
+    reset_password:
+        old:
+            label: 'Old password'
+            placeholder: 'old password'
+        new:
+            first:
+                label: 'New password'
+                placeholder: 'new password'
+            second:
+                label: 'Confirm your new password'
+                placeholder: 'new password'
+service:
+    mail_sender:
+        activate:
+            subject: 'Link to activate your account'
+        reset_password:
+            subject: 'Link to reset your password'
+templates:
+    _header:
+        account: 'My account'
+        register: 'Sign up'
+        login: 'Log in'
+        logout: 'Log out'
+    account:
+        change_password:
+            h1: 'Change your password'
+            subtitle: 'Please enter your old password then your new password'
+            submit: 'Update'
+            title: 'Change password'
+        index:
+            change_password: 'Change my password'
+            h1: 'My account'
+            title: 'My account'
+    email:
+        activate:
+            h1: 'Activate your account'
+            text: 'Click on the following link, or copy it in your browser, to activate your account.'
+        reset_password:
+            h1: 'Reset your password'
+            text: 'Click on the following link, or copy it in your browser, to reset your password.'
+    user_security:
+        login:
+            submit: 'Log in'
+            email:
+                label: 'Email address'
+                placeholder: 'name@address.com'
+            h1: 'Welcome back!'
+            password:
+                forgotten: 'Forgot password?'
+                label: 'Password'
+                placeholder: 'password'
+            register:
+                main_text: 'Don''t have an account yet?'
+                link_text: 'Sign up'
+            remember_me:
+                text: 'Remember me for %remember_me% days'
+            subtitle: 'Please enter you user information.'
+            title: 'Log in'
+        register:
+            h1: 'Sign up'
+            login:
+                main_text: 'You already have an account?'
+                link_text: 'Just log in!'
+            submit: 'Sign up'
+            subtitle: 'Enter your personal informations'
+            title: 'Sign up'
+        reset_password_confirmation:
+            h1: 'Reset your password'
+            submit: 'Reset'
+            subtitle: 'Enter you new password to connect in your account'
+            title: 'Reset password'
+        reset_password_request:
+            h1: 'Forgot your password?'
+            submit: 'Send email'
+            subtitle: 'Enter your email address and we''ll send you an email with a reset link.'
+            title: 'Forgot password'
+        wait_for_activation:
+            h1: 'Activate your account to continue'
+            subtitle: 'We send you an email with a link to activate your account.'
+            title: 'Wait for activation'

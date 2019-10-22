@@ -1,0 +1,50 @@
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import '~bootstrap';
+
+$footer-background-color: #343a40;
+body {
+    background-color: $footer-background-color;
+}
+
+header {
+    img.flag {
+        height: 20px;
+    }
+}
+
+footer {
+    background-color: $footer-background-color;
+    color: white;
+    h2 {
+        font-size: 0.8rem;
+        color: #868b8d;
+    }
+    $footer-link-color: #dee2e6;
+    a {
+        color: $footer-link-color;
+    }
+    a:hover {
+        color: darken($footer-link-color, 20);
+    }
+}
+
+main {
+    background-color: lightgray;
+     > div {
+        max-width: 1000px;
+
+    }
+}
+
+.homepage {
+    height: 2500px;
+    width: 800px;
+    border: red solid 1px;
+}
+
+.security-form {
+    width: 100%;
+    max-width: 500px;
+}
+

@@ -20,7 +20,7 @@ YARN = $(DOCKER_COMPOSE) run -u symfony encore yarn
 build: docker-compose.yml docker/apache/Dockerfile ## Build docker images
 	    make build-database
 	    make build-encore
-	    make build-web
+	    make build-web-dev
 
 .PHONY: build-database
 build-database: docker-compose.yml docker/database/Dockerfile ## Build docker database image
@@ -30,15 +30,19 @@ build-database: docker-compose.yml docker/database/Dockerfile ## Build docker da
 build-encore: docker-compose.yml docker/node/Dockerfile ## Build docker encore image
 	    $(DOCKER_COMPOSE) build --build-arg UID=$(shell id -u) --build-arg GID=$(shell id -g) encore
 
-.PHONY: build-web
-build-web: docker-compose.yml docker/apache/Dockerfile docker/apache/Dockerfile.dev ## Build docker web image
-	    docker build -t symfony:base -f docker/apache/Dockerfile docker/apache
+.PHONY: build-web-base
+build-web-base: docker-compose.yml docker/apache/Dockerfile ## Build base docker web image
+	    docker build -t so-vue:base -f docker/apache/Dockerfile docker/apache
+
+.PHONY: build-web-dev
+build-web-dev: docker-compose.yml docker/apache/Dockerfile.dev ## Build dev docker web image
+	    make build-web-base
 	    $(DOCKER_COMPOSE) build --build-arg UID=$(shell id -u) --build-arg GID=$(shell id -g) web
 
-.PHONY: build-prod
-build-prod: docker-compose.yml docker/apache/Dockerfile docker/apache/Dockerfile.prod ## Build production docker web image
-	    docker build -t symfony:base -f docker/apache/Dockerfile docker/apache
-	    docker build -t symfony:prod -f docker/apache/Dockerfile.prod .
+.PHONY: build-web-prod
+build-web-prod: docker/apache/Dockerfile.prod ## Build production docker web image
+	    make build-base-web
+	    docker build -t so-vue:prod -f docker/apache/Dockerfile.prod .
 
 .PHONY: clean
 clean: docker-compose.yml ## Clean the PHP and JS libraries
@@ -74,7 +78,7 @@ up: docker-compose.yml ## Start the containers
 
 ## PHP commands
 .PHONY: pinstall
-pinstall: symfony/composer.json symfony/composer.lock ## Install PHP libaries
+pinstall: symfony/composer.json ## Install PHP libaries
 	    $(COMPOSER) install
 
 .PHONY: pupdate
@@ -152,7 +156,7 @@ phpunit: symfony/bin/phpunit ## Lauch phpunit test
 	    $(ENV_PHP) php bin/phpunit
 
 ## Doctrine commands
-.PHONY: create-db
+.PHONY: create-database
 create-db: symfony/bin/console ## Create database if not exists
 	    $(ENV_PHP) php bin/console doctrine:database:create --if-not-exists --no-interaction
 
@@ -160,7 +164,7 @@ create-db: symfony/bin/console ## Create database if not exists
 create-schema: symfony/bin/console ## Create schema
 	    $(ENV_PHP) php bin/console doctrine:schema:create --no-interaction
 
-.PHONY: drop-db
+.PHONY: drop-database
 drop-db: symfony/bin/console ## Drop database if exists
 	    $(ENV_PHP) php bin/console doctrine:database:drop --if-exists --force --no-interaction
 

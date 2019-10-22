@@ -2,14 +2,18 @@
 <html lang="fr_FR">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{{ brand_name }} - {% block title %}{% endblock %}</title>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
     </head>
     <body>
         {% include 'fragments/_header.html.twig' %}
-        {% block body %}{% endblock %}
+        <main class="container-fluid d-flex justify-content-center py-5">
+            <div>
+                {% block body %}{% endblock %}
+            </div>
+        </main>
         {% include 'fragments/_footer.html.twig' %}
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
