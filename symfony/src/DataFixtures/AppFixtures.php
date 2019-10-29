@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
+use App\Entity\Product;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -36,6 +37,14 @@ class AppFixtures extends Fixture
         $admin1->setRoles(['ROLE_ADMIN']);
         $admin1->setPassword($this->encoder->encodePassword($admin1, 'password'));
         $manager->persist($admin1);
+
+        for ($i = 1; $i < 11; ++$i) {
+            $product = new Product();
+            $product->setName('Product ' . $i);
+            $product->setSlug('product-' . $i);
+            $product->setPrice(intval($i * 1000));
+            $manager->persist($product);
+        }
 
         $manager->flush();
     }

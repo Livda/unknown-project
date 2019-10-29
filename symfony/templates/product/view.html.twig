@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello{% endblock %}
+
+{% block body %}
+    <p>Vue d'un produit</p>
+    <p>Nom : {{ product.name }}</p>
+    <p>Prix : {{ product.price|price('EUR') }}</p>
+    <p>Description : {{ product.description }}</p>
+{% endblock %}

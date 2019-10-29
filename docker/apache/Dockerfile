@@ -10,6 +10,7 @@ RUN apk add --upgrade --no-cache \
     php7-ctype \
     php7-curl \
     php7-dom \
+    php7-intl \
     php7-opcache \
     php7-pdo \
     php7-pdo_mysql \

@@ -12,8 +12,8 @@
                 <div class="dropdown-menu" aria-labelledby="headerDropdown">
                     {% set route = app.request.attributes.get('_route') %}
                     {% set parameters = app.request.attributes.get('_route_params') %}
-                    <a class="dropdown-item" href="/en/">English</a>
-                    <a class="dropdown-item" href="/fr/">Français</a>
+                    <a class="dropdown-item" href="{{ path(route, parameters|merge({'_locale': 'en'})) }}">English</a>
+                    <a class="dropdown-item" href="{{ path(route, parameters|merge({'_locale': 'fr'})) }}">Français</a>
                 </div>
             </div>
             {% if app.user is null %}
