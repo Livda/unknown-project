@@ -4,19 +4,22 @@ COPY symfony /app/
 WORKDIR /app
 RUN yarn --check-files --non-interactive && yarn build --optimize-minimize
 
-FROM so-vue:base
-ENV APP_ENV prod
+FROM symfony:base as php-builder
 
-COPY docker/apache/config/prod/symfony.conf /etc/apache2/conf.d/symfony.conf
 COPY symfony /var/www/symfony
 WORKDIR /var/www/symfony
 RUN echo "<?php return array ('APP_ENV' => 'prod');" > .env.local.php
 
 RUN composer install --no-dev --optimize-autoloader --classmap-authoritative --no-suggest --ansi --no-interaction
-COPY --from=js-builder /app/public/build /var/www/symfony/public/build
-
 RUN rm -rf /var/cache/apk/* /tmp/* \
     assets/ node_modules/  \
     yarn.lock package.json
+
+FROM symfony:base
+ENV APP_ENV prod
+
+COPY docker/apache/config/prod/symfony.conf /etc/apache2/conf.d/symfony.conf
+COPY --from=php-builder /var/www/symfony /var/www/symfony
+COPY --from=js-builder /app/public/build /var/www/symfony/public/build
 
 RUN chown -R apache:apache /var/www/symfony
