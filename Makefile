@@ -24,25 +24,25 @@ build: docker-compose.yml docker/apache/Dockerfile ## Build docker images
 
 .PHONY: build-database
 build-database: docker-compose.yml docker/database/Dockerfile ## Build docker database image
-	    $(DOCKER_COMPOSE) build --build-arg UID=$(shell id -u) --build-arg GID=$(shell id -g) database
+	    $(DOCKER_COMPOSE) build --build-arg UID=$(shell id -u) --build-arg GID=$(shell id -g) --no-cache database
 
 .PHONY: build-encore
 build-encore: docker-compose.yml docker/node/Dockerfile ## Build docker encore image
-	    $(DOCKER_COMPOSE) build --build-arg UID=$(shell id -u) --build-arg GID=$(shell id -g) encore
+	    $(DOCKER_COMPOSE) build --build-arg UID=$(shell id -u) --build-arg GID=$(shell id -g) --no-cache encore
 
 .PHONY: build-web-base
 build-web-base: docker-compose.yml docker/apache/Dockerfile ## Build base docker web image
-	    docker build -t so-vue:base -f docker/apache/Dockerfile docker/apache
+	    docker build -t symfony:base -f docker/apache/Dockerfile --no-cache docker/apache
 
 .PHONY: build-web-dev
 build-web-dev: docker-compose.yml docker/apache/Dockerfile.dev ## Build dev docker web image
 	    make build-web-base
-	    $(DOCKER_COMPOSE) build --build-arg UID=$(shell id -u) --build-arg GID=$(shell id -g) web
+	    $(DOCKER_COMPOSE) build --build-arg UID=$(shell id -u) --build-arg GID=$(shell id -g) --no-cache web
 
 .PHONY: build-web-prod
 build-web-prod: docker/apache/Dockerfile.prod ## Build production docker web image
 	    make build-base-web
-	    docker build -t so-vue:prod -f docker/apache/Dockerfile.prod .
+	    docker build -t symfony:prod -f docker/apache/Dockerfile.prod --no-cache .
 
 .PHONY: clean
 clean: docker-compose.yml ## Clean the PHP and JS libraries
