@@ -3,6 +3,7 @@ FROM symfony:base
 ARG UID=1000
 ARG GID=1000
 
+ENV COMPOSER_MEMORY_LIMIT 4G
 RUN adduser -u $UID -g $GID -D symfony
 COPY config/dev/symfony.conf /etc/apache2/conf.d/symfony.conf
 COPY config/dev/httpd.conf /etc/apache2/httpd.conf
