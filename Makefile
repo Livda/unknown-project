@@ -137,11 +137,11 @@ router: symfony/config/routes/ ## Print router
 ## Tools commands
 .PHONY: dump
 dump: symfony/vendor/bin/var-dump-check ## Check if there is no dump in the code base
-	    $(ENV_PHP) php vendor/bin/var-dump-check --no-colors --symfony --exclude bin --exclude config --exclude libraries --exclude public --exclude var --exclude vendor .
+	    $(ENV_PHP) php vendor/bin/var-dump-check --no-colors --symfony --exclude bin --exclude public --exclude var --exclude vendor .
 
 .PHONY: phpcs
 phpcs: symfony/vendor/bin/php-cs-fixer symfony/.php_cs.dist ## Launch php-cs-fixer
-	    $(ENV_PHP) php vendor/bin/php-cs-fixer fix --config=.php_cs.dist --allow-risky=yes
+	    $(ENV_PHP) php vendor/bin/php-cs-fixer fix --config=.php_cs.dist
 
 .PHONY: php-cs-dry-run
 php-cs-dry-run: symfony/vendor/bin/php-cs-fixer ## Launch php-cs-fixer but no modifications are made
