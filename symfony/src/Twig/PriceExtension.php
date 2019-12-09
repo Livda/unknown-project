@@ -8,7 +8,7 @@ use Twig\Extension\AbstractExtension;
 use Twig\Extensions\IntlExtension as TwigIntlExtension;
 use Twig\TwigFilter;
 
-class PriceExtension extends TwigIntlExtension
+class PriceExtension extends AbstractExtension
 {
     public function getFilters()
     {
