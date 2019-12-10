@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Twig;
 
 use Twig\Extension\AbstractExtension;
-use Twig\Extensions\IntlExtension as TwigIntlExtension;
 use Twig\TwigFilter;
 
 class PriceExtension extends AbstractExtension
@@ -19,7 +18,9 @@ class PriceExtension extends AbstractExtension
 
     public function formatPrice($number, $currency = null, $locale = null)
     {
-        $formatter = twig_get_number_formatter($locale, 'currency');
+        $locale = null !== $locale ? $locale : \Locale::getDefault();
+
+        $formatter = \NumberFormatter::create($locale, \NumberFormatter::CURRENCY);
 
         return $formatter->formatCurrency($number / 100, $currency);
     }
